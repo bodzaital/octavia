@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "octavia", "octavia\octavia.csproj", "{7659A451-2683-4FB8-B082-61872F08DCF1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7659A451-2683-4FB8-B082-61872F08DCF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7659A451-2683-4FB8-B082-61872F08DCF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7659A451-2683-4FB8-B082-61872F08DCF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7659A451-2683-4FB8-B082-61872F08DCF1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ABEBE475-4516-4CA9-9376-EDADEC1173F5}
+	EndGlobalSection
+EndGlobal

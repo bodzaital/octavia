@@ -1,0 +1,11 @@
+C:\Users\Zsolt\source\repos\octavia\octavia\bin\Release\netcoreapp2.0\octavia.deps.json
+C:\Users\Zsolt\source\repos\octavia\octavia\bin\Release\netcoreapp2.0\octavia.runtimeconfig.json
+C:\Users\Zsolt\source\repos\octavia\octavia\bin\Release\netcoreapp2.0\octavia.runtimeconfig.dev.json
+C:\Users\Zsolt\source\repos\octavia\octavia\bin\Release\netcoreapp2.0\octavia.dll
+C:\Users\Zsolt\source\repos\octavia\octavia\bin\Release\netcoreapp2.0\octavia.pdb
+C:\Users\Zsolt\source\repos\octavia\octavia\obj\Release\netcoreapp2.0\octavia.csproj.CoreCompileInputs.cache
+C:\Users\Zsolt\source\repos\octavia\octavia\obj\Release\netcoreapp2.0\octavia.AssemblyInfoInputs.cache
+C:\Users\Zsolt\source\repos\octavia\octavia\obj\Release\netcoreapp2.0\octavia.AssemblyInfo.cs
+C:\Users\Zsolt\source\repos\octavia\octavia\obj\Release\netcoreapp2.0\octavia.dll
+C:\Users\Zsolt\source\repos\octavia\octavia\obj\Release\netcoreapp2.0\octavia.pdb
+C:\Users\Zsolt\source\repos\octavia\octavia\obj\Release\netcoreapp2.0\octavia.csprojResolveAssemblyReference.cache
