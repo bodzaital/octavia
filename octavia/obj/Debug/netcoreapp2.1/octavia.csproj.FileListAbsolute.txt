@@ -9,3 +9,14 @@ C:\Users\Zsolt\source\repos\octavia\octavia\obj\Debug\netcoreapp2.1\octavia.Asse
 C:\Users\Zsolt\source\repos\octavia\octavia\obj\Debug\netcoreapp2.1\octavia.dll
 C:\Users\Zsolt\source\repos\octavia\octavia\obj\Debug\netcoreapp2.1\octavia.pdb
 C:\Users\Zsolt\source\repos\octavia\octavia\obj\Debug\netcoreapp2.1\octavia.csprojAssemblyReference.cache
+C:\Users\Zsolt\Documents\GitHub\octavia\octavia\bin\Debug\netcoreapp2.1\octavia.deps.json
+C:\Users\Zsolt\Documents\GitHub\octavia\octavia\bin\Debug\netcoreapp2.1\octavia.runtimeconfig.json
+C:\Users\Zsolt\Documents\GitHub\octavia\octavia\bin\Debug\netcoreapp2.1\octavia.runtimeconfig.dev.json
+C:\Users\Zsolt\Documents\GitHub\octavia\octavia\bin\Debug\netcoreapp2.1\octavia.dll
+C:\Users\Zsolt\Documents\GitHub\octavia\octavia\bin\Debug\netcoreapp2.1\octavia.pdb
+C:\Users\Zsolt\Documents\GitHub\octavia\octavia\obj\Debug\netcoreapp2.1\octavia.csprojAssemblyReference.cache
+C:\Users\Zsolt\Documents\GitHub\octavia\octavia\obj\Debug\netcoreapp2.1\octavia.csproj.CoreCompileInputs.cache
+C:\Users\Zsolt\Documents\GitHub\octavia\octavia\obj\Debug\netcoreapp2.1\octavia.AssemblyInfoInputs.cache
+C:\Users\Zsolt\Documents\GitHub\octavia\octavia\obj\Debug\netcoreapp2.1\octavia.AssemblyInfo.cs
+C:\Users\Zsolt\Documents\GitHub\octavia\octavia\obj\Debug\netcoreapp2.1\octavia.dll
+C:\Users\Zsolt\Documents\GitHub\octavia\octavia\obj\Debug\netcoreapp2.1\octavia.pdb

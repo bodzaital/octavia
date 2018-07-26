@@ -687,11 +687,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Zsolt\\source\\repos\\octavia\\octavia\\octavia.csproj",
+      "projectUniqueName": "C:\\Users\\Zsolt\\Documents\\GitHub\\octavia\\octavia\\octavia.csproj",
       "projectName": "octavia",
-      "projectPath": "C:\\Users\\Zsolt\\source\\repos\\octavia\\octavia\\octavia.csproj",
+      "projectPath": "C:\\Users\\Zsolt\\Documents\\GitHub\\octavia\\octavia\\octavia.csproj",
       "packagesPath": "C:\\Users\\Zsolt\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Zsolt\\source\\repos\\octavia\\octavia\\obj\\",
+      "outputPath": "C:\\Users\\Zsolt\\Documents\\GitHub\\octavia\\octavia\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
