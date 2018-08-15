@@ -20,7 +20,7 @@ namespace octavia
 
 			if (octaviaOptions.FatalError.Count() > 0)
 			{
-				foreach (FatalArgumentsError error in octaviaOptions.FatalError)
+				foreach (ArgumentError error in octaviaOptions.FatalError)
 				{
 					Console.WriteLine(error);
 				}
@@ -67,48 +67,96 @@ namespace octavia
 
 			bool isFileLocked;
 			bool isLimitReached;
-			int fileOpenTries;
+			int fileOpenedCount;
 
-			foreach (string file in watchFiles)
+			if (o.ConfigFile.HasConfig)
 			{
-				Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] reading: {file}");
-				isFileLocked = true;
-				isLimitReached = true;
-				fileOpenTries = 0;
-				do
+				foreach (string file in o.ConfigFile.Configuration)
 				{
-					try
+					string fullPath = $"{o.WatchFolder}/{file}.{o.Extension}";
+					Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] reading: {fullPath}");
+					isFileLocked = true;
+					isLimitReached = true;
+					fileOpenedCount = 0;
+					do
 					{
-						using (StreamReader streamReader = new StreamReader(file))
+						try
 						{
-							if (!o.NoRegions)
+							using (StreamReader streamReader = new StreamReader(fullPath))
 							{
-								compiled.Append($"/* #region {file} */\n\n");
+								if (!o.NoRegions)
+								{
+									compiled.Append($"/* #region {fullPath} */\n\n");
+								}
+
+								compiled.Append(streamReader.ReadToEnd());
+
+								if (!o.NoRegions)
+								{
+									compiled.Append($"\n\n/* #endregion */\n\n");
+								}
+
+								isFileLocked = false;
 							}
-
-							compiled.Append(streamReader.ReadToEnd());
-
-							if (!o.NoRegions)
-							{
-								compiled.Append($"\n\n/* #endregion */\n\n");
-							}
-
-							isFileLocked = false;
 						}
-					}
-					catch (IOException)
+						catch (IOException)
+						{
+							if (fileOpenedCount > 10)
+							{
+								Console.WriteLine($"{fullPath} is locked. It will be retried on the next compilation.");
+								isLimitReached = true;
+							}
+							else
+							{
+								fileOpenedCount++;
+							}
+						}
+					} while (!isLimitReached || isFileLocked);
+				}
+			}
+			else
+			{
+				foreach (string file in watchFiles)
+				{
+					Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] reading: {file}");
+					isFileLocked = true;
+					isLimitReached = true;
+					fileOpenedCount = 0;
+					do
 					{
-						if (fileOpenTries > 10)
+						try
 						{
-							Console.WriteLine($"{file} is locked. It will be retried on the next compilation.");
-							isLimitReached = true;
+							using (StreamReader streamReader = new StreamReader(file))
+							{
+								if (!o.NoRegions)
+								{
+									compiled.Append($"/* #region {file} */\n\n");
+								}
+
+								compiled.Append(streamReader.ReadToEnd());
+
+								if (!o.NoRegions)
+								{
+									compiled.Append($"\n\n/* #endregion */\n\n");
+								}
+
+								isFileLocked = false;
+							}
 						}
-						else
+						catch (IOException)
 						{
-							fileOpenTries++;
+							if (fileOpenedCount > 10)
+							{
+								Console.WriteLine($"{file} is locked. It will be retried on the next compilation.");
+								isLimitReached = true;
+							}
+							else
+							{
+								fileOpenedCount++;
+							}
 						}
-					}
-				} while (isFileLocked || !isLimitReached);
+					} while (isFileLocked || !isLimitReached);
+				}
 			}
 
 			Console.WriteLine($"\n[{DateTime.Now.ToString("HH:mm:ss")}] writing {o.DestinationFile}");
