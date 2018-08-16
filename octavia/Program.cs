@@ -20,7 +20,7 @@ namespace octavia
 
 			if (octaviaOptions.FatalError.Count() > 0)
 			{
-				foreach (FatalArgumentsError error in octaviaOptions.FatalError)
+				foreach (ArgumentError error in octaviaOptions.FatalError)
 				{
 					Console.WriteLine(error);
 				}
@@ -63,18 +63,16 @@ namespace octavia
 			stopwatch.Restart();
 
 			StringBuilder compiled = new StringBuilder();
-			string[] watchFiles = Directory.GetFiles(o.WatchFolder, $"*.{o.Extension}");
+			
+			bool next;
+			int fileOpenedCount;
 
-			bool isFileLocked;
-			bool isLimitReached;
-			int fileOpenTries;
-
-			foreach (string file in watchFiles)
+			foreach (string file in o.Files)
 			{
 				Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] reading: {file}");
-				isFileLocked = true;
-				isLimitReached = true;
-				fileOpenTries = 0;
+				fileOpenedCount = 0;
+				next = false;
+
 				do
 				{
 					try
@@ -93,22 +91,22 @@ namespace octavia
 								compiled.Append($"\n\n/* #endregion */\n\n");
 							}
 
-							isFileLocked = false;
+							next = true;
 						}
 					}
 					catch (IOException)
 					{
-						if (fileOpenTries > 10)
+						if (fileOpenedCount == 10)
 						{
-							Console.WriteLine($"{file} is locked. It will be retried on the next compilation.");
-							isLimitReached = true;
+							Console.WriteLine($"    {file} is locked. It will be retried on the next compilation.");
+							next = true;
 						}
 						else
 						{
-							fileOpenTries++;
+							fileOpenedCount++;
 						}
 					}
-				} while (isFileLocked || !isLimitReached);
+				} while (!next);
 			}
 
 			Console.WriteLine($"\n[{DateTime.Now.ToString("HH:mm:ss")}] writing {o.DestinationFile}");
