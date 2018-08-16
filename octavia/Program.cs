@@ -63,17 +63,16 @@ namespace octavia
 			stopwatch.Restart();
 
 			StringBuilder compiled = new StringBuilder();
-
-			bool isFileLocked;
-			bool isLimitReached;
+			
+			bool next;
 			int fileOpenedCount;
 
 			foreach (string file in o.Files)
 			{
 				Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] reading: {file}");
-				isFileLocked = true;
-				isLimitReached = true;
 				fileOpenedCount = 0;
+				next = false;
+
 				do
 				{
 					try
@@ -92,22 +91,22 @@ namespace octavia
 								compiled.Append($"\n\n/* #endregion */\n\n");
 							}
 
-							isFileLocked = false;
+							next = true;
 						}
 					}
 					catch (IOException)
 					{
-						if (fileOpenedCount > 10)
+						if (fileOpenedCount == 10)
 						{
-							Console.WriteLine($"{file} is locked. It will be retried on the next compilation.");
-							isLimitReached = true;
+							Console.WriteLine($"    {file} is locked. It will be retried on the next compilation.");
+							next = true;
 						}
 						else
 						{
 							fileOpenedCount++;
 						}
 					}
-				} while (!isLimitReached || isFileLocked);
+				} while (!next);
 			}
 
 			Console.WriteLine($"\n[{DateTime.Now.ToString("HH:mm:ss")}] writing {o.DestinationFile}");
