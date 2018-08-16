@@ -6,28 +6,60 @@ using System.Text;
 
 namespace octavia
 {
-	// Handles error messages related to incorrect command-line arguments.
+	/// <summary>
+	/// Handles error messages related to incorrect command-line arguments.
+	/// </summary>
 	class ArgumentError
 	{
+		/// <summary>
+		/// The argument with the error.
+		/// </summary>
 		public string Argument { get; set; }
+
+		/// <summary>
+		/// A description of the error.
+		/// </summary>
 		public string Description { get; set; }
 
+		/// <summary>
+		/// Initializes a new ArgumentError object.
+		/// </summary>
+		/// <param name="argument">The argument with the error.</param>
+		/// <param name="description">The error's description.</param>
 		public ArgumentError(string argument, string description)
 		{
 			Argument = argument;
 			Description = description;
 		}
 
+		/// <summary>
+		/// Formats an output about the error.
+		/// </summary>
+		/// <returns>Returns the error in a formatted way.</returns>
 		public override string ToString()
 		{
 			return $"ERROR {Argument}: {Description}";
 		}
 	}
 
+	/// <summary>
+	/// Holds information about the configuration file.
+	/// </summary>
 	class ConfigFile
 	{
+		/// <summary>
+		/// If true, the FileLocation and Configuration properties are not null.
+		/// </summary>
 		public bool HasConfig { get; set; }
+
+		/// <summary>
+		/// The location of the configuration file.
+		/// </summary>
 		public string FileLocation { get; set; }
+		
+		/// <summary>
+		/// The list and order of files to be included.
+		/// </summary>
 		public List<string> Configuration { get; set; }
 
 		public ConfigFile(bool hasConfig, string fileLocation = null, List<string> configuration = null)
@@ -45,13 +77,14 @@ namespace octavia
 		private const string NoRegionsArgument = "-no-regions";
 		private const string ExtensionArgument = "-ext";
 		private const string ConfigArgument = "-conf";
-
+		
 		public string WatchFolder { get; set; }
 		public string DestinationFile { get; set; }
 		public bool NoRegions { get; set; }
 		public List<ArgumentError> FatalError { get; set; }
 		public string Extension { get; set; }
 		public ConfigFile ConfigFile { get; set; }
+		public List<string> Files { get; set; }
 
 		public OctaviaOptions()
 		{
@@ -61,6 +94,7 @@ namespace octavia
 			FatalError = new List<ArgumentError>();
 			Extension = "css";
 			ConfigFile = new ConfigFile(false);
+			Files = new List<string>();
 		}
 
 		public static OctaviaOptions GetOctaviaOptions(string[] args)
@@ -157,14 +191,15 @@ namespace octavia
 				// Check if the argument contain something after the extension keyword (its value).
 				if (Array.IndexOf(args, ConfigArgument) + 1 < args.Length)
 				{
+					// Check if the config file actually exists.
 					string configFile = args[Array.IndexOf(args, ConfigArgument) + 1];
 					if (File.Exists(configFile))
 					{
-						//using (StreamReader r = new StreamReader(configFile))
-						//{
-						//	o.ConfigFile = new ConfigFile(true, configFile, r.ReadToEnd());
-						//}
-						o.ConfigFile = new ConfigFile(true, configFile, new List<string>(File.ReadAllLines(configFile)));
+						// Format the watch files so it is like: "src/file.css" and not just "file".
+						foreach (string configLine in File.ReadAllLines(configFile))
+						{
+							o.Files.Add($"{o.WatchFolder}/{configLine}.{o.Extension}");
+						}
 					}
 					else
 					{
@@ -175,6 +210,11 @@ namespace octavia
 				{
 					o.FatalError.Add(new ArgumentError(ConfigArgument, $"Argument exists but missing required value."));
 				}
+			}
+			else
+			{
+				// Here we don't need to format the watch files as they are already in the format of "src/file.css".
+				o.Files = Directory.GetFiles(o.WatchFolder, $"*.{o.Extension}").ToList();
 			}
 			#endregion
 

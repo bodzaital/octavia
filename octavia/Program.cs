@@ -63,100 +63,51 @@ namespace octavia
 			stopwatch.Restart();
 
 			StringBuilder compiled = new StringBuilder();
-			string[] watchFiles = Directory.GetFiles(o.WatchFolder, $"*.{o.Extension}");
 
 			bool isFileLocked;
 			bool isLimitReached;
 			int fileOpenedCount;
 
-			if (o.ConfigFile.HasConfig)
+			foreach (string file in o.Files)
 			{
-				foreach (string file in o.ConfigFile.Configuration)
+				Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] reading: {file}");
+				isFileLocked = true;
+				isLimitReached = true;
+				fileOpenedCount = 0;
+				do
 				{
-					string fullPath = $"{o.WatchFolder}/{file}.{o.Extension}";
-					Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] reading: {fullPath}");
-					isFileLocked = true;
-					isLimitReached = true;
-					fileOpenedCount = 0;
-					do
+					try
 					{
-						try
+						using (StreamReader streamReader = new StreamReader(file))
 						{
-							using (StreamReader streamReader = new StreamReader(fullPath))
+							if (!o.NoRegions)
 							{
-								if (!o.NoRegions)
-								{
-									compiled.Append($"/* #region {fullPath} */\n\n");
-								}
-
-								compiled.Append(streamReader.ReadToEnd());
-
-								if (!o.NoRegions)
-								{
-									compiled.Append($"\n\n/* #endregion */\n\n");
-								}
-
-								isFileLocked = false;
+								compiled.Append($"/* #region {file} */\n\n");
 							}
+
+							compiled.Append(streamReader.ReadToEnd());
+
+							if (!o.NoRegions)
+							{
+								compiled.Append($"\n\n/* #endregion */\n\n");
+							}
+
+							isFileLocked = false;
 						}
-						catch (IOException)
-						{
-							if (fileOpenedCount > 10)
-							{
-								Console.WriteLine($"{fullPath} is locked. It will be retried on the next compilation.");
-								isLimitReached = true;
-							}
-							else
-							{
-								fileOpenedCount++;
-							}
-						}
-					} while (!isLimitReached || isFileLocked);
-				}
-			}
-			else
-			{
-				foreach (string file in watchFiles)
-				{
-					Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] reading: {file}");
-					isFileLocked = true;
-					isLimitReached = true;
-					fileOpenedCount = 0;
-					do
+					}
+					catch (IOException)
 					{
-						try
+						if (fileOpenedCount > 10)
 						{
-							using (StreamReader streamReader = new StreamReader(file))
-							{
-								if (!o.NoRegions)
-								{
-									compiled.Append($"/* #region {file} */\n\n");
-								}
-
-								compiled.Append(streamReader.ReadToEnd());
-
-								if (!o.NoRegions)
-								{
-									compiled.Append($"\n\n/* #endregion */\n\n");
-								}
-
-								isFileLocked = false;
-							}
+							Console.WriteLine($"{file} is locked. It will be retried on the next compilation.");
+							isLimitReached = true;
 						}
-						catch (IOException)
+						else
 						{
-							if (fileOpenedCount > 10)
-							{
-								Console.WriteLine($"{file} is locked. It will be retried on the next compilation.");
-								isLimitReached = true;
-							}
-							else
-							{
-								fileOpenedCount++;
-							}
+							fileOpenedCount++;
 						}
-					} while (isFileLocked || !isLimitReached);
-				}
+					}
+				} while (!isLimitReached || isFileLocked);
 			}
 
 			Console.WriteLine($"\n[{DateTime.Now.ToString("HH:mm:ss")}] writing {o.DestinationFile}");
