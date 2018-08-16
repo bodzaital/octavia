@@ -1,17 +1,44 @@
 # octavia
 
-A dotnet core app to concat css files into one file. Hopefully doesn't have any bugs in it.
+![dotnet core version 2.1](https://img.shields.io/badge/dotnet%20core-2.1-blue.svg)
+![release version number](https://img.shields.io/github/release/bodzaital/octavia.svg)
+![apache 2 license](https://img.shields.io/github/license/bodzaital/octavia.svg)
 
-# usage
+## What
 
-    -src: required - specify a source folder to watch.
-    -dest: required - speficy a destination file to compile into.
-    -no-regions: optional - prevent #region and #endregion comments.
-    -ext: optional - specify an extension to watch. Default: "css"
+A dotnet core app that concatenates css files into one.
 
-# example
-    dotnet octavia.dll -src "src" -dest "dist/output.css" -no-regions -ext "scss"
+## How
 
-# Why did I wrote this
+`dotnet octavia.dll [arguments]`
 
-I made it for my other project, wikitables, so I can work in separate css files. I know there are probably npm apps that do the same thing, but I wanted to write my own with a semi-reusable command-line arguments parser. It... kinda works.
+| Argument || Description |
+| --- | --- | --- |
+| `-src` | *required*  |specify a source folder to watch |
+| `-dest` | *required*  |specify a destination file to compile into |
+| `-no-regions` | *optional*  |prevent #region and #endregion comments |
+| `-ext` | *optional*  |specify an extension to watch, default: `css` |
+| `-conf` | *optional*  |specify a configuration file |
+
+## Conf file
+
+List the files in the source folder in the order you'd like to include them.
+
+
+**Folder structure:**
+```
+source
+   └ variables.css
+   └ root.css
+   └ body.css
+   └ reset.css
+```
+
+**Conf file:**
+```
+root
+reset
+body
+```
+
+In this example, the program will only include the above three files in that order.
