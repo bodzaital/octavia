@@ -1,8 +1,8 @@
 ![octavia logo](images/logo.png)
 
-![release version number](https://img.shields.io/github/release/bodzaital/octavia.svg)
-![dotnet core version 2.1](https://img.shields.io/badge/dotnet%20core-2.1-blue.svg)
-![apache 2 license](https://img.shields.io/github/license/bodzaital/octavia.svg)
+[![release version number](https://img.shields.io/github/release/bodzaital/octavia.svg)](https://github.com/bodzaital/octavia/releases/tag/v1.0)
+[![dotnet core version 2.1](https://img.shields.io/badge/dotnet%20core-2.1-blue.svg)](#)
+[![apache 2 license](https://img.shields.io/github/license/bodzaital/octavia.svg)](https://github.com/bodzaital/octavia/blob/master/LICENSE)
 
 ## What
 
