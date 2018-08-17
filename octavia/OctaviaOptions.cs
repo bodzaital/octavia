@@ -213,8 +213,12 @@ namespace octavia
 			}
 			else
 			{
-				// Here we don't need to format the watch files as they are already in the format of "src/file.css".
-				o.Files = Directory.GetFiles(o.WatchFolder, $"*.{o.Extension}").ToList();
+				// Without checking for FatalErrors, and running without a specified WatchFolder, the program crashes.
+				if (o.FatalError.Count == 0)
+				{
+					// Here we don't need to format the watch files as they are already in the format of "src/file.css".
+					o.Files = Directory.GetFiles(o.WatchFolder, $"*.{o.Extension}").ToList();
+				}
 			}
 			#endregion
 
